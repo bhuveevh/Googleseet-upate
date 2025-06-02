@@ -1,345 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Important Links - Live Updates</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <style>
-        /* Custom CSS for better layout and specific UI elements */
-        body {
-            background-color: #eceff1; /* Light Blue Grey background for a clean look */
-            font-family: 'Roboto', sans-serif; /* Standard Material Design font */
-        }
-        .container {
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-        .card {
-            margin-bottom: 20px;
-            position: relative; /* Essential for positioning the red dot */
-            border-radius: 8px; /* Slightly rounded corners for cards */
-            overflow: hidden; /* Ensures content stays within rounded corners */
-            box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12); /* Material Design shadow */
-        }
-        .card-content p {
-            margin-bottom: 5px;
-            color: #424242; /* Darker text for readability */
-        }
-        .card-content a {
-            word-break: break-all; /* Handles long URLs gracefully */
-            color: #2196f3; /* Material Blue for links */
-        }
-        .card-action {
-            border-top: 1px solid rgba(160,160,160,0.2); /* Separator for actions */
-        }
-
-        /* Red blinking dot for new/updated items */
-        .red-dot {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            height: 12px;
-            width: 12px;
-            background-color: #ef5350; /* Material Red */
-            border-radius: 50%;
-            display: none; /* Hidden by default, shown by JS */
-            animation: blink 1s infinite alternate; /* Blinking animation */
-            z-index: 10; /* Ensures it's on top of card content */
-        }
-        @keyframes blink {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Loading indicator styling */
-        .loading-indicator {
-            text-align: center;
-            margin-top: 50px;
-            color: #757575; /* Grey text */
-        }
-
-        /* Error and No Data messages styling */
-        .alert-message {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-        }
-        .alert-message .material-icons {
-            margin-right: 10px;
-        }
-        .alert-danger {
-            background-color: #ef9a9a; /* Light Red */
-            color: #b71c1c; /* Dark Red text */
-        }
-        .alert-info {
-            background-color: #90caf9; /* Light Blue */
-            color: #1a237e; /* Dark Blue text */
-        }
-
-        /* Responsive grid for cards */
-        .row-flex {
-            display: flex;
-            flex-wrap: wrap; /* Allows cards to wrap to next line */
-            justify-content: flex-start; /* Aligns cards to the start of the row */
-        }
-        .col {
-            flex: 1 1 100%; /* Default: each card takes full width on small screens */
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
-            padding: 10px; /* Space around each card */
-        }
-        /* Medium screens: 2 columns */
-        @media only screen and (min-width : 601px) {
-            .col {
-                flex: 0 0 calc(50% - 20px); /* 2 cards per row with padding */
-                max-width: calc(50% - 20px);
-            }
-        }
-        /* Large screens: 3 columns */
-        @media only screen and (min-width : 993px) {
-            .col {
-                flex: 0 0 calc(33.333% - 20px); /* 3 cards per row with padding */
-                max-width: calc(33.333% - 20px);
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Important Links - vH.online</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+    .link-card {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #e3f2fd;
+      margin-bottom: 15px;
+      padding: 15px 20px;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    .link-card:hover {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .link-info {
+      flex: 1;
+    }
+    .link-info a {
+      font-size: 16px;
+      font-weight: bold;
+      color: #0d47a1;
+      text-decoration: none;
+    }
+    .link-info small {
+      display: block;
+      margin-top: 5px;
+      color: #555;
+    }
+    .copy-btn {
+      background: #0d47a1;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .copy-btn:active {
+      transform: scale(0.97);
+    }
+    .dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      height: 12px;
+      width: 12px;
+      background-color: red;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      50% {
+        opacity: 0.3;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav class="light-blue darken-4">
-        <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">Important Links</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#" onclick="fetchGoogleSheetData(); return false;">
-                    <i class="material-icons left">refresh</i>Refresh Data
-                </a></li>
-            </ul>
-        </div>
-    </nav>
+  <div class="container">
+    <h2>Important Links For vH.online</h2>
+    <div id="links-container"></div>
+  </div>
 
-    <div class="container">
-        <h4 class="center-align light-blue-text text-darken-4">Latest Updates from Google Sheet</h4>
-        <p class="center-align grey-text text-darken-1">Newest links appear at the top. Click 'Copy URL' and the red dot will disappear.</p>
+  <script>
+    const sheetURL = 'https://opensheet.elk.sh/108keumRnsLI02VoSuE0b_0YsdsxBnhXJ4Vev5GnPAiE/Sheet1';
+    const container = document.getElementById('links-container');
 
-        <div class="loading-indicator" id="loading-indicator">
-            <div class="preloader-wrapper big active">
-                <div class="spinner-layer spinner-blue-only">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Loading data...</p>
-        </div>
+    async function loadData() {
+      const res = await fetch(sheetURL);
+      const data = await res.json();
 
-        <div id="links-container" class="row row-flex" style="display:none;">
-            </div>
+      // Sort by latest (top)
+      data.sort((a, b) => new Date(`${b.Years}-${b.Month}-${b.Date}`) - new Date(`${a.Years}-${a.Month}-${a.Date}`));
 
-        <div id="error-message" class="alert-message alert-danger" style="display:none;">
-            <i class="material-icons">error_outline</i> Error loading data. Please check your internet connection or try again later.
-        </div>
-        <div id="no-data-message" class="alert-message alert-info" style="display:none;">
-            <i class="material-icons">info_outline</i> No data available in the Google Sheet.
-        </div>
-    </div>
+      data.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'link-card';
+        
+        const linkInfo = document.createElement('div');
+        linkInfo.className = 'link-info';
+        linkInfo.innerHTML = `
+          <a href="${item['Important Links For My vH.online website']}" target="_blank">${item['Important Links For My vH.online website']}</a>
+          <small>${item.Date} ${item.Month} ${item.Years}</small>
+        `;
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <script>
-        // **IMPORTANT: PASTE YOUR DEPLOYED APPS SCRIPT WEB APP URL HERE**
-        const GOOGLE_SHEET_DATA_API_URL = 'https://script.google.com/macros/s/AKfycbygj7rCYSpJY99sana3FVYI5tiYgzfyp6oNiyr4SAH14UPwzvCcNt-QIDHTnbZtbA0/exec'; 
-        // Example: 'https://script.google.com/macros/s/AKfycbx_YOUR_UNIQUE_ID_HERE/exec';
-
-        // Get references to HTML elements
-        const linksContainer = document.getElementById('links-container');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const errorMessage = document.getElementById('error-message');
-        const noDataMessage = document.getElementById('no-data-message');
-
-        // Local Storage Keys for persistence
-        const LAST_UPDATE_KEY = 'lastGoogleSheetFetchTime';
-        const COPIED_URLS_KEY = 'copiedUrls';
-
-        // Load copied URLs state from localStorage
-        let copiedUrls = JSON.parse(localStorage.getItem(COPIED_URLS_KEY)) || {};
-
-        // Helper function to format date
-        function formatDate(dateStr, monthStr, yearStr) {
-            // Basic check for valid inputs
-            if (dateStr && monthStr && yearStr) {
-                return `${dateStr} ${monthStr} ${yearStr}`;
-            }
-            return 'N/A'; // Return 'N/A' if any part is missing
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        button.innerText = 'Copy';
+        
+        // Red dot only for latest (index 0)
+        if (index === 0) {
+          const dot = document.createElement('div');
+          dot.className = 'dot';
+          div.appendChild(dot);
         }
 
-        // Function to render data into Materialize cards
-        function renderLinks(data) {
-            linksContainer.innerHTML = ''; // Clear existing content
-            errorMessage.style.display = 'none';
-            noDataMessage.style.display = 'none';
+        // Copy event
+        button.addEventListener('click', () => {
+          navigator.clipboard.writeText(item['Important Links For My vH.online website']);
+          button.innerText = 'Copied!';
+          button.style.background = 'green';
 
-            if (!data || data.length === 0) {
-                noDataMessage.style.display = 'flex'; // Use flex for alert-message style
-                return;
-            }
+          const dot = div.querySelector('.dot');
+          if (dot) dot.remove();
 
-            // Sort data in reverse order to show newest items at the top
-            // Assuming newer data is added at the end of the Google Sheet,
-            // or we use the 'timestamp' if it was explicitly added by Apps Script
-            const sortedData = [...data].reverse(); 
-
-            // Get the timestamp of the last successful data fetch from localStorage
-            // This is used to determine if an item is "newly" fetched since the last time
-            const lastFetchTime = parseInt(localStorage.getItem(LAST_UPDATE_KEY) || '0');
-
-            sortedData.forEach(item => {
-                // Safely access data using the cleaned headers from Apps Script
-                const url = item.important_links_for_my_vh_online_website || '#'; 
-                const date = item.date || ''; 
-                const month = item.month || ''; 
-                const year = item.years || ''; // Using 'years' as per your sheet image
-                const name = item.name || ''; // Optional: if you use column E 'Name'
-
-                // Unique ID for each row, generated by Apps Script based on row number
-                const uniqueId = item.id; 
-
-                // Check if the item is 'new' based on its timestamp (if available)
-                // and if it hasn't been copied yet.
-                // The timestamp from Apps Script is the time when Apps Script fetched the data.
-                // A better approach for "new" might involve storing a hash of the content,
-                // or a specific 'added_on' column in your Google Sheet.
-                // For now, we'll use the comparison with lastFetchTime.
-                const isNewlyFetched = item.timestamp && item.timestamp > lastFetchTime;
-                const hasBeenCopied = copiedUrls[uniqueId];
-
-                // Create a column div for Materialize grid
-                const cardCol = document.createElement('div');
-                cardCol.className = 'col s12 m6 l4'; // Responsive classes: 100% on small, 50% on medium, 33% on large
-
-                // Build the inner card HTML
-                cardCol.innerHTML = `
-                    <div class="card hoverable">
-                        ${isNewlyFetched && !hasBeenCopied ? '<div class="red-dot"></div>' : ''}
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">
-                                ${name ? name : 'Important Link'}
-                                <i class="material-icons right">more_vert</i>
-                            </span>
-                            <p><strong>URL:</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>
-                            <p><strong>Date:</strong> ${formatDate(date, month, year)}</p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">
-                                Details<i class="material-icons right">close</i>
-                            </span>
-                            <p><strong>Source Link:</strong> <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></p>
-                            <p><strong>Date Added/Updated:</strong> ${formatDate(date, month, year)}</p>
-                            ${name ? `<p><strong>Description:</strong> ${name}</p>` : ''}
-                        </div>
-                        <div class="card-action">
-                            <button class="btn waves-effect waves-light light-blue darken-2 btn-copy" 
-                                data-url="${url}" 
-                                data-id="${uniqueId}" 
-                                ${hasBeenCopied ? 'disabled' : ''}>
-                                Copy URL <i class="material-icons right">content_copy</i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                linksContainer.appendChild(cardCol); // Add the card to the container
-            });
-
-            // After rendering, initialize Materialize components that need it (like card-reveal)
-            M.AutoInit(); 
-
-            // Attach event listeners to all "Copy URL" buttons
-            document.querySelectorAll('.btn-copy').forEach(button => {
-                button.addEventListener('click', async (event) => {
-                    const urlToCopy = event.currentTarget.dataset.url;
-                    const itemId = event.currentTarget.dataset.id; // Unique ID of the row
-
-                    try {
-                        await navigator.clipboard.writeText(urlToCopy); // Copy to clipboard
-                        M.toast({html: 'URL Copied!', classes: 'green darken-1'}); // Show success toast
-
-                        // Hide the red dot and disable the button after copying
-                        const parentCard = event.currentTarget.closest('.card');
-                        const redDot = parentCard ? parentCard.querySelector('.red-dot') : null;
-                        if (redDot) {
-                            redDot.style.display = 'none';
-                            redDot.style.animation = 'none'; // Stop blinking
-                        }
-                        event.currentTarget.setAttribute('disabled', 'true'); // Disable button
-
-                        // Mark this URL as copied in localStorage
-                        copiedUrls[itemId] = true;
-                        localStorage.setItem(COPIED_URLS_KEY, JSON.stringify(copiedUrls));
-
-                    } catch (err) {
-                        console.error('Failed to copy: ', err);
-                        M.toast({html: 'Failed to copy URL.', classes: 'red darken-1'}); // Show error toast
-                    }
-                });
-            });
-
-            // Display red dots for items that were newly fetched and NOT yet copied
-            linksContainer.querySelectorAll('.card').forEach(card => {
-                const redDot = card.querySelector('.red-dot');
-                if (redDot) {
-                    const itemId = card.querySelector('.btn-copy').dataset.id;
-                    if (!copiedUrls[itemId]) {
-                        redDot.style.display = 'block'; // Show if not copied
-                    }
-                }
-            });
-        }
-
-        // Function to fetch data from Google Apps Script Web App
-        async function fetchGoogleSheetData() {
-            loadingIndicator.style.display = 'block'; // Show loading spinner
-            linksContainer.style.display = 'none';    // Hide data container
-            errorMessage.style.display = 'none';     // Hide error message
-            noDataMessage.style.display = 'none';    // Hide no data message
-
-            try {
-                const response = await fetch(GOOGLE_SHEET_DATA_API_URL);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json(); // Parse JSON data
-                renderLinks(data); // Render the fetched data
-
-                // On successful fetch, store the current time as the last update time
-                // This is crucial for determining "newly fetched" items for the red dot.
-                localStorage.setItem(LAST_UPDATE_KEY, new Date().getTime());
-
-            } catch (error) {
-                console.error('Error fetching Google Sheet data:', error);
-                errorMessage.style.display = 'flex'; // Show error message
-            } finally {
-                loadingIndicator.style.display = 'none'; // Hide loading spinner
-                linksContainer.style.display = 'flex'; // Show data container (flex for grid)
-            }
-        }
-
-        // Initialize Materialize components and fetch data on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            M.AutoInit(); // Auto-initializes Materialize components like Modals, Toasts etc.
-            fetchGoogleSheetData(); // Fetch data when the page loads
-            
-            // Set up interval for automatic data updates every 30 seconds (30000 ms)
-            // You can adjust this interval as needed.
-            setInterval(fetchGoogleSheetData, 30000); 
+          setTimeout(() => {
+            button.innerText = 'Copy';
+            button.style.background = '#0d47a1';
+          }, 2000);
         });
-    </script>
+
+        div.appendChild(linkInfo);
+        div.appendChild(button);
+        container.appendChild(div);
+      });
+    }
+
+    loadData();
+  </script>
 </body>
 </html>
